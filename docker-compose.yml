@@ -6,7 +6,7 @@ services:
     image: pwlb/drop-seq-pipe
     environment:
       - NUMCELLS=50000
-      - NTHREADS=8
+      - NCORES=8
       - SAMPLENAMES=STAT1_Ctrl_1_1 STAT1_Ctrl_1_2 STAT1_Ctrl_2_1 STAT1_Ctrl_2_2
 
     # use when debugging and for interactive testing

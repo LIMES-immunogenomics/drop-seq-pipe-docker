@@ -20,7 +20,7 @@ RUN wget --quiet \
     chmod a+x /usr/bin/gtfToGenePred
 
 ENV NUMCELLS 500
-ENV NTHREADS 1
+ENV NCORES 1
 ENV TARGETS all
 COPY config/config.yaml /config/
 COPY scripts /scripts

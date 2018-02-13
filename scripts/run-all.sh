@@ -6,7 +6,6 @@ input=/input
 output=/output
 meta=/meta
 data=$output/data
-reference=/reference
 
 echo "samples,expected_cells,read_length" \
      > $output/samples.csv
@@ -15,6 +14,7 @@ if [ ! -n "$SAMPLENAMES" ]; then
     echo "set SAMPLENAMES environmental variable in the docker-compose.yml"
 fi
 
+# TODO: parallelize
 mkdir -p $data
 for sample in $SAMPLENAMES; do
     for r in R1 R2; do
