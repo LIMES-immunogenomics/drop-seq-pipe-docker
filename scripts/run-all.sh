@@ -16,32 +16,38 @@ fi
 
 # TODO: parallelize
 mkdir -p $data
+
 for sample in $SAMPLENAMES; do
+    # delete the underscores because dropSeqPipe may run into issues
+    # with files named sample_1_2_R1.fastq.gz
+    samplenorm=$(echo $sample| sed -e 's/_//g')
+
     for r in R1 R2; do
 
-        echo "merging $sample, $r..."
+        echo "merging $sample [$samplenorm], $r..."
 
-        files=$(find /input -name "$sample_*$r*.fastq.gz")
+        files=$(find /input -type f -name "$sample_*$r*.fastq.gz")
         if [ ! -n "$files" ]; then
             (>&2 echo "Could not find any suitable files associated with the name $sample")
             exit 0
         fi
 
-        find /input -name "$sample_*$r*.fastq.gz" \
+        find /input  \
+             -type f \
+             -name "$sample_*$r*.fastq.gz" \
             | sort \
-            | xargs zcat \
-            | gzip --fast \
-                   > $data/"${sample}_$r.fastq.gz"
+            | xargs cat \
+                    > $data/"${samplenorm}_$r.fastq.gz"
     done
 
-    readlength=$(zcat $data/"${sample}_R2.fastq.gz" \
+    readlength=$(zcat $data/"${samplenorm}_R2.fastq.gz" \
                      | head -n2 \
                      | tail -n1 \
                      | wc -c)
     # correct for the newline character
     let readlength-=1
 
-    echo "$sample,$NUMCELLS,$readlength" \
+    echo "$samplenorm,$NUMCELLS,$readlength" \
          >> $output/samples.csv
 done
 

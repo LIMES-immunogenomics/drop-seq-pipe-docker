@@ -61,7 +61,7 @@ The pipeline expects the following directories to be mounted
 
 - `/input:ro`, the location of the `fastq.gz` files
 - `/output:rw`, where the results will be stored
-- `/meta`, the location of the annotation and genome files.  The
+- `/meta:rw`, the location of the annotation and genome files.  The
   script will look for `transctripts.fasta` and `annotation.gtf`
   files.  Then it will generated STAR index and other files necessary
   for the pipeline, if such files already exist the pipeline will
