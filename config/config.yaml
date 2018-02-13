@@ -1,0 +1,31 @@
+LOCAL:
+    TMPDIR: /tmp
+    DROPSEQ-wrapper: /usr/local/drop-seq-tools/drop-seq-tools-wrapper.sh
+    MEMORY: 2g
+META:
+    species:
+        - HUMAN
+    reference_file: transcripts.fasta
+    annotation_file: annotation.gtf
+    reference_folder: /meta/
+FILTER:
+    IlluminaClip: TruSeq3-PE.fa
+    5PrimeSmartAdapter: CACACTCTTTCCCTACACGACGC
+    Cell_barcode:
+        start: 1
+        end: 12
+        min_quality: 30
+        num_below_quality: 0
+    UMI:
+        start: 13
+        end: 20
+        min_quality: 30
+        num_below_quality: 0
+EXTRACTION:
+    bc_edit_distance: 0
+    min_count_per_umi: 1
+STAR_PARAMETERS:
+    outFilterMismatchNmax: 10
+    outFilterMismatchNoverLmax: 0.3
+    outFilterMismatchNoverReadLmax: 1
+    outFilterMatchNmin: 0
