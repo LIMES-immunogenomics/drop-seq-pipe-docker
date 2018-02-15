@@ -26,15 +26,15 @@ for sample in $SAMPLENAMES; do
 
         echo "merging $sample [$samplenorm], $r..."
 
-        files=$(find /input -type f -name "$sample_*$r*.fastq.gz")
+        files=$(find $input -type f -name "${sample}_*$r*.fastq.gz")
         if [ ! -n "$files" ]; then
             (>&2 echo "Could not find any suitable files associated with the name $sample")
             exit 0
         fi
 
-        find /input  \
+        find $input  \
              -type f \
-             -name "$sample_*$r*.fastq.gz" \
+             -name "${sample}_*$r*.fastq.gz" \
             | sort \
             | xargs cat \
                     > $data/"${samplenorm}_$r.fastq.gz"
@@ -61,6 +61,3 @@ snakemake \
     $TARGETS \
     > >(tee -a $output/stdout.log) \
     2> >(tee -a $output/stderr.log >&2)
-
-# clear the data folder
-rm -rf $data
