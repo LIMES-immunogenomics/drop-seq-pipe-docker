@@ -14,10 +14,7 @@ RUN git clone https://github.com/Hoohm/dropSeqPipe.git && \
     cp drop-seq-tools-wrapper.sh $DROPSEQPATH && \
     conda env create -v --name dropSeqPipe --file environment.yaml
 
-RUN wget --quiet \
-    http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/gtfToGenePred \
-    -O /usr/bin/gtfToGenePred && \
-    chmod a+x /usr/bin/gtfToGenePred
+COPY ./binaries/gtfToGenePred /usr/bin/gtfToGenePred
 
 ENV NUMCELLS 500
 ENV NCORES 1
