@@ -1,5 +1,5 @@
 LOCAL:
-    TMPDIR: /tmp
+    TMPDIR: /data/tmp
     DROPSEQ-wrapper: /usr/local/drop-seq-tools/drop-seq-tools-wrapper.sh
     MEMORY: 2g
 META:
