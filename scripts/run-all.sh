@@ -61,3 +61,6 @@ snakemake \
     $TARGETS \
     > >(tee -a $output/stdout.log) \
     2> >(tee -a $output/stderr.log >&2)
+
+chmod -R a+w $output
+chown -R nobody $output
