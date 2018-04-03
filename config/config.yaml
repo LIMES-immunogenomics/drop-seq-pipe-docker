@@ -1,31 +1,47 @@
 LOCAL:
-    TMPDIR: /data/tmp
-    DROPSEQ-wrapper: /usr/local/drop-seq-tools/drop-seq-tools-wrapper.sh
-    MEMORY: 2g
+    temp-directory: /output/tmp
+    dropseq-wrapper: /usr/local/drop-seq-tools/drop-seq-tools-wrapper.sh
+    memory: 20g
 META:
     species:
         - HUMAN
-    reference_file: transcripts.fasta
-    annotation_file: annotation.gtf
-    reference_folder: /meta/
+        - MOUSE
+    ratio: 0.2
+    reference-file: reference.fasta
+    annotation-file: annotation.gtf
+    reference-directory: /meta/
 FILTER:
-    IlluminaClip: TruSeq3-PE.fa
-    5PrimeSmartAdapter: CACACTCTTTCCCTACACGACGC
-    Cell_barcode:
+    5-prime-smart-adapter: CACACTCTTTCCCTACACGACGC
+    cell-barcode:
         start: 1
-        end: 12
-        min_quality: 30
-        num_below_quality: 0
-    UMI:
+        end:   12
+        min-quality: 30
+        num-below-quality: 0
+    UMI-barcode:
         start: 13
         end: 20
-        min_quality: 30
-        num_below_quality: 0
+        min-quality: 30
+        num-below-quality: 0
+    trimmomatic:
+        adapters-file: NexteraPE-PE.fa
+        LEADING: 3
+        TRAILING: 3
+        SLIDINGWINDOW:
+            windowSize: 4
+            requiredQuality: 20
+        MINLEN: 20
+        ILLUMINACLIP:
+            seedMismatches: 2
+            palindromeClipThreshold: 30
+            simpleClipThreshold: 10
+MAPPING:
+    STAR:
+        outFilterMismatchNmax: 10
+        outFilterMismatchNoverLmax: 0.3
+        outFilterMismatchNoverReadLmax: 1
+        outFilterMatchNmin: 0
+        outFilterMatchNminOverLread: 0.66
+        outFilterScoreMinOverLread: 0.66
 EXTRACTION:
-    bc_edit_distance: 0
-    min_count_per_umi: 1
-STAR_PARAMETERS:
-    outFilterMismatchNmax: 10
-    outFilterMismatchNoverLmax: 0.3
-    outFilterMismatchNoverReadLmax: 1
-    outFilterMatchNmin: 0
+    UMI-edit-distance: 0
+    minimum-counts-per-UMI: 1

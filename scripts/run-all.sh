@@ -7,7 +7,7 @@ output=/output
 meta=/meta
 data=$output/data
 
-echo "samples,expected_cells,read_length" \
+echo "samples,expected_cells,read_length,batch" \
      > $output/samples.csv
 
 if [ ! -n "$SAMPLENAMES" ]; then
@@ -47,7 +47,7 @@ for sample in $SAMPLENAMES; do
     # correct for the newline character
     let readlength-=1
 
-    echo "$samplenorm,$NUMCELLS,$readlength" \
+    echo "$samplenorm,$NUMCELLS,$readlength,Batch1" \
          >> $output/samples.csv
 done
 
@@ -61,3 +61,6 @@ snakemake \
     $TARGETS \
     > >(tee -a $output/stdout.log) \
     2> >(tee -a $output/stderr.log >&2)
+
+chmod -R a+w $output
+chown -R nobody $output
