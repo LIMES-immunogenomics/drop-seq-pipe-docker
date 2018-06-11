@@ -26,7 +26,7 @@ for sample in $SAMPLENAMES; do
 
         echo "merging $sample [$samplenorm], $r..."
 
-        files=$(find $input -type f -name "${sample}_*$r*.fastq.gz")
+        files=$(find $input -type f -name "${sample}_*$r*.fastq.gz"|sort)
         if [ ! -n "$files" ]; then
             (>&2 echo "Could not find any suitable files associated with the name $sample")
             exit 0
