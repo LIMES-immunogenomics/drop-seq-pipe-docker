@@ -6,6 +6,7 @@ input=/input
 output=/output
 meta=/meta
 data=$output/data
+tmp=$output/tmp
 
 echo "samples,expected_cells,read_length,batch" \
      > $output/samples.csv
@@ -14,9 +15,12 @@ if [ ! -n "$SAMPLENAMES" ]; then
     echo "set SAMPLENAMES environmental variable in the docker-compose.yml"
 fi
 
-# TODO: parallelize
 mkdir -p $data
 
+rm -rf $tmp
+mkdir -p $tmp
+
+# TODO: parallelize
 for sample in $SAMPLENAMES; do
     # delete the underscores because dropSeqPipe may run into issues
     # with files named sample_1_2_R1.fastq.gz
@@ -29,16 +33,24 @@ for sample in $SAMPLENAMES; do
         files=$(find $input -type f -name "${sample}_*$r*.fastq.gz"|sort)
         if [ ! -n "$files" ]; then
             (>&2 echo "Could not find any suitable files associated with the name $sample")
-            exit 0
+            exit 1
         fi
 
-        find $input  \
-             -type f \
-             -name "${sample}_*$r*.fastq.gz" \
-            | sort \
-            | xargs cat \
-                    > $data/"${samplenorm}_$r.fastq.gz"
+        fout=$data/"${samplenorm}_$r.fastq.gz"
+        rm -f $fout
+
+        for f in $files; do
+            echo "$sample, $samplenorm, $r, $f, $fout" >> $output/merging$r.log
+            echo $sample >> $tmp/${sample}_${r}
+            cat $f >> $fout
+        done
     done
+
+    if ! cmp $tmp/${sample}_R1 $tmp/${sample}_R2; then
+        echo "For sample $sample files with R1 and R2 are not matching"
+        cat $tmp/${sample}_R2
+        exit 1
+    fi
 
     readlength=$(zcat $data/"${samplenorm}_R2.fastq.gz" \
                      | head -n2 \
