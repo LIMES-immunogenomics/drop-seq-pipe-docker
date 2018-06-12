@@ -1,0 +1,18 @@
+channels:
+  - r
+  - conda-forge
+  - bioconda
+dependencies:
+  - r=3.4.1
+  - readline=6.2
+  - picard=2.14.1.0
+  - r=3.4.1
+  - r-ggplot2
+  - r-ggpubr
+  - r-gridextra
+  - r-reshape2
+  - r-viridis
+  - r-stringdist
+  - samtools
+  - ncurses
+  - star

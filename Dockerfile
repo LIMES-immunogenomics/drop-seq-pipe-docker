@@ -7,13 +7,15 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     rm ~/miniconda.sh
 ENV PATH /opt/conda/bin:$PATH
 
-# this step takes unberably long due to a bug in conda
+RUN conda install -c bioconda -c conda-forge snakemake
 
 RUN git clone https://github.com/Hoohm/dropSeqPipe.git && \
     cd dropSeqPipe && \
-    git reset origin 161572831c748f45504c4e21c117d6aca554a5b6 && \
-    cp drop-seq-tools-wrapper.sh $DROPSEQPATH && \
-    conda env create -v --name dropSeqPipe --file environment.yaml
+    git checkout -b temp 8a3b643a30efab065c80a8fb5f732d4abc43d49f && \
+    cp drop-seq-tools-wrapper.sh $DROPSEQPATH
+
+COPY environment.yaml .
+RUN conda env create -v --name dropSeqPipe --file environment.yaml
 
 COPY ./binaries/gtfToGenePred /usr/bin/gtfToGenePred
 

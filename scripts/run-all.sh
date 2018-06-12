@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source activate dropSeqPipe
+set -ex
 
 input=/input
 output=/output
@@ -54,6 +54,8 @@ done
 cp /config/config.yaml $output/config.yaml
 
 cd $output
+
+source activate dropSeqPipe
 
 snakemake \
     --cores $NTHREADS \
