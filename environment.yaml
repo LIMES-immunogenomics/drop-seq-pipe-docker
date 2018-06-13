@@ -16,3 +16,6 @@ dependencies:
   - samtools
   - ncurses
   - star
+  - trimmomatic
+  - fastqc
+  - multiqc
