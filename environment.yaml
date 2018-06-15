@@ -14,6 +14,7 @@ dependencies:
   - r-viridis
   - r-stringdist
   - r-reshape2
+  - icu=54
   - samtools
   - ncurses
   - star
