@@ -14,7 +14,7 @@ sample_name_L001_R1_001.fastq.gz"""
     for f in path.glob("**/*.fastq.gz"):
         f = f.name
         samples.add(re.sub(
-            r"_L\d{3}_R\d_\d{3}.fastq.gz", "", f))
+            r"_S\d+_L\d{3}_R\d_\d{3}.fastq.gz", "", f))
     if not samples:
         raise Exception("Could not find any fastq.gz files under "+str(path))
     samples = list(samples)
