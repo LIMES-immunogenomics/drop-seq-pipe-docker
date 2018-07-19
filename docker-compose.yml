@@ -3,11 +3,10 @@ version: '3'
 services:
   drop-seq-pipe:
     build: .
-    image: pwlb/drop-seq-pipe
+    image: pwlb/drop-seq-pipe:v0.1.1
     environment:
       - NUMCELLS=5
-      - NCORES=10
-      - SAMPLENAMES=sample1 sample2
+      - JOBS=10
 
     # use when debugging and for interactive testing
     # command: ""

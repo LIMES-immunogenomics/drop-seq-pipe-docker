@@ -7,8 +7,6 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     rm ~/miniconda.sh
 ENV PATH /opt/conda/bin:$PATH
 
-RUN conda install -c bioconda -c conda-forge snakemake
-
 RUN git clone https://github.com/Hoohm/dropSeqPipe.git && \
     cd dropSeqPipe && \
     git checkout -b temp 8a3b643a30efab065c80a8fb5f732d4abc43d49f && \
@@ -16,14 +14,16 @@ RUN git clone https://github.com/Hoohm/dropSeqPipe.git && \
 
 COPY environment.yaml .
 RUN conda env create -v --name dropSeqPipe --file environment.yaml
+RUN pip3 install pandas
 
 COPY ./binaries/gtfToGenePred /usr/bin/gtfToGenePred
 
-ENV NUMCELLS 500
-ENV NCORES 1
-ENV TARGETS all
+ENV TARGETS "all"
+ENV SAMPLENAMES ""
 COPY config/config.yaml /config/
 COPY scripts /scripts
+RUN echo "" >> /dropSeqPipe/Snakefile && \
+    echo 'include: "/scripts/merge/merge.smk"' >> /dropSeqPipe/Snakefile
 
-ENTRYPOINT ["bash", "/scripts/run-all.sh"]
-CMD [""]
+ENTRYPOINT ["/bin/bash"]
+CMD ["/scripts/run-all.sh"]
