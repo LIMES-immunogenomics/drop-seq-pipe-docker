@@ -1,4 +1,4 @@
-FROM pwlb/rna-seq-pipeline-base:v0.1.0
+FROM pwlb/rna-seq-pipeline-base:v0.1.1
 
 
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
