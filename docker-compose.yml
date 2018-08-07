@@ -2,8 +2,7 @@ version: '3'
 
 services:
   drop-seq-pipe:
-    build: .
-    image: pwlb/drop-seq-pipe:v0.1.1
+    image: pwlb/drop-seq-pipe:v0.1.4
     environment:
       - NUMCELLS=5
       - JOBS=10
