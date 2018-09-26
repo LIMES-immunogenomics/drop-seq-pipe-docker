@@ -11,7 +11,7 @@ META:
     annotation-file: annotation.gtf
     reference-directory: /meta/
 FILTER:
-    5-prime-smart-adapter: CACACTCTTTCCCTACACGACGC
+    5-prime-smart-adapter: AAGCAGTGGTATCAACGCAGAGTGAATGGG
     cell-barcode:
         start: 1
         end:   12
