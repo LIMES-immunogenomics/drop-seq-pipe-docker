@@ -2,7 +2,7 @@ version: '3'
 
 services:
   drop-seq-pipe:
-    image: pwlb/drop-seq-pipe:v0.1.4
+    image: schultzelab/drop-seq-pipe:v0.1.5
     environment:
       - NUMCELLS=5
       - JOBS=10
